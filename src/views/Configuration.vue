@@ -10,7 +10,7 @@
                     v-bind:data-placeholder="null"
                     v-bind:data-wname="item"
                     v-draggable
-                    v-on:dragstart="handleDragStart">{{item}}</li>
+                    @dragstart="handleDragStart">{{item}}</li>
                 </ul>
             </v-flex>
             <!-- layout placeholders -->
@@ -31,8 +31,8 @@
                                     v-bind:data-placeholder="index"
                                     v-bind:data-wname="item.componnet"
                                     v-draggable
-                                                        v-on:dragstart="handleDragStart"
-                                    v-on:drop="handleDrop">
+                                    @dragstart="handleDragStart"
+                                    @drop="handleDrop">
                                         <div class="tools" v-show="item.componnet" @click="item.componnet = ''">
                                             <v-icon>delete_outline</v-icon>
                                         </div>
@@ -79,7 +79,7 @@
             }
         },
         methods: {
-             handleDragStart: function (e) {
+            handleDragStart: function (e) {
                  console.log('drag start');
                  
                  console.log(e);
