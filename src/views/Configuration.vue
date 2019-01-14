@@ -6,7 +6,7 @@
                 <h1>Components</h1>
                 <hr>
                 <ul>
-                    <li v-for="(item, index) in componnetsList" :key="index"
+                    <li v-for="(item, index, key) in widgetsList" :key="key"
                     v-bind:data-placeholder="null"
                     v-bind:data-wname="item"
                     v-draggable
@@ -24,19 +24,19 @@
                                 :is-resizable="layoutConfiguration.resizable" :responsive="layoutConfiguration.responsive"
                                 :use-css-transforms="true">
 
-                                <grid-item v-for="(item, index, key) in layout" :key="key" v-bind:class="{'grid-item': item.componnet == '' ? true : false}"
+                                <grid-item v-for="(item, index, key) in layout" :key="key" v-bind:class="{'grid-item': item.widget == '' ? true : false}"
                                     :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i">
 
-                                    <div class="drag-area" v-bind:class="{cursor: item.componnet}" 
+                                    <div class="drag-area" v-bind:class="{cursor: item.widget}" 
                                     v-bind:data-placeholder="index"
-                                    v-bind:data-wname="item.componnet"
+                                    v-bind:data-wname="item.widget"
                                     v-draggable
                                     @dragstart="handleDragStart"
                                     @drop="handleDrop">
-                                        <div class="tools" v-show="item.componnet" @click="item.componnet = ''">
+                                        <div class="tools" v-show="item.widget" @click="item.widget = ''">
                                             <v-icon>delete_outline</v-icon>
                                         </div>
-                                        <component v-bind:is="item.componnet"></component>
+                                        <component v-bind:is="item.widget"></component>
                                     </div>
 
                                 </grid-item>
@@ -85,7 +85,7 @@
                 // getting source id
                 this.currentlySource = e.target.dataset.placeholder ? e.target.dataset.placeholder : null;
 
-                console.log(`Selected componnet: ${this.currentlyDragging}`);
+                console.log(`Selected widget: ${this.currentlyDragging}`);
                 console.log(`Source placeholder: ${this.currentlySource}`);
             },
             handleDrop: function (e) {
@@ -94,10 +94,10 @@
 
                 console.log(`Destanation placeholder: ${this.currentlyDestination}`);
                 // Updating data
-                this.$store.commit('updateComponnets', {
+                this.$store.commit('updateWidgets', {
                     'src': this.currentlySource,
                     'des': this.currentlyDestination,
-                    'componnetName': this.currentlyDragging
+                    'widgetName': this.currentlyDragging
                 })
             }
         },
@@ -112,8 +112,8 @@
                     this.$store.commit('setData', arry)
                 }
             },
-            componnetsList() {
-                return this.$store.getters.getListComponnets
+            widgetsList() {
+                return this.$store.getters.getListWidgets
             }
         }
 

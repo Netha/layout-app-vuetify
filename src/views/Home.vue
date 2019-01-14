@@ -5,15 +5,7 @@
     <v-container>
       <v-layout row wrap>
         <!-- Layouts list -->
-        <v-card class="card" v-bind:class="item.name" xs4 v-for="(item, index) in componnetsList" :key="index" @click="chooseLayout(index)">
-          <v-card-title primary-title>
-            <div>
-              <h3 class="headline mb-0">
-                <!-- {{ item.name }} -->
-              </h3>
-            </div>
-          </v-card-title>
-        </v-card>
+        <v-card class="card" v-bind:class="item.name" xs4 v-for="(item, index) in componnetsList" :key="index" @click="chooseLayout(index)"></v-card>
       </v-layout>
     </v-container>
   </v-container>
@@ -33,6 +25,7 @@
       }
     },
     computed: {
+      // Getting layout from store
       componnetsList() {
         return this.$store.getters.getLayouts
       }

@@ -1,9 +1,9 @@
 <template>
   <v-app>
-    <v-toolbar app class="top-toolbar" color="" flat>
+    <v-toolbar app class="top-toolbar" flat>
       <v-toolbar-side-icon></v-toolbar-side-icon>
     </v-toolbar>
-    <v-content transition="slide-x-transition">
+    <v-content>
       <router-view></router-view>
     </v-content>
   </v-app>

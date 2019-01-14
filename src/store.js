@@ -6,8 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     currentData: [],
-    componnetsList: ["wClock", "wDate"],
-    layouts: [{
+    widgetsList: ["wClock", "wDate"], // Componnets list for cofiguration screen
+    layouts: [{ // Layouts presets. name of the layout with the stracture.
         name: 'layout1',
         layout: [{
           "x": 0,
@@ -15,35 +15,35 @@ export default new Vuex.Store({
           "w": 10,
           "h": 4,
           "i": "0",
-          "componnet": ""
+          "widget": ""
         }, {
           "x": 0,
           "y": 4,
           "w": 5,
           "h": 8,
           "i": "1",
-          "componnet": ""
+          "widget": ""
         }, {
           "x": 5,
           "y": 4,
           "w": 5,
           "h": 8,
           "i": "2",
-          "componnet": ""
+          "widget": ""
         }, {
           "x": 0,
           "y": 20,
           "w": 10,
           "h": 4,
           "i": "3",
-          "componnet": ""
+          "widget": ""
         }, {
           "x": 0,
           "y": 12,
           "w": 10,
           "h": 8,
           "i": "4",
-          "componnet": ""
+          "widget": ""
         }]
       },
       {
@@ -65,46 +65,51 @@ export default new Vuex.Store({
     ]
   },
   mutations: {
-    updateComponnets(state, obj) {
-      // obj = src, des, componnetName
+    updateWidgets(state, obj) {
+      // obj:
+      // src - widget source
+      // des - widget destination 
+      // componentName - widget name
 
-      // Check destantion exist 
-      if (this.state.currentData[obj.des].componnet) {
-          // replacing state
-          let sourceW = state.currentData[obj.des].componnet;
-          let currentW = obj.componnetName;
-          state.currentData[obj.des].componnet = currentW
+      // Check destination exist 
+      if (this.state.currentData[obj.des].widget) {
+        // Replacing widgets 
+        const sourceW = state.currentData[obj.des].widget;
+        const currentW = obj.widgetName;
+        state.currentData[obj.des].widget = currentW
 
-          // in case is not replacing from commponnet list
-          if(obj.src){
-            state.currentData[obj.src].componnet =  sourceW;
-          }
-          
+        // in case is not replacing from component list
+        if (obj.src) {
+          state.currentData[obj.src].widget = sourceW;
+        }
+
       } else {
-        state.currentData[obj.des].componnet = obj.componnetName;
-        // check if if from coponnent list
-        obj.src ? state.currentData[obj.src].componnet = '' : false;
+        state.currentData[obj.des].widget = obj.widgetName;
+        // Check if from component list
+        obj.src ? state.currentData[obj.src].widget = '' : false;
       }
     },
+    // Set layout in data
     chooseLayout(state, index) {
       state.currentData = state.layouts[index].layout
     },
+    // Update data layout
     setData(state, arry) {
       state.currentData = arry
     }
   },
   getters: {
-    getListComponnets(state) {      
-      return state.componnetsList
+    // Get all widgets
+    getListWidgets(state) {
+      return state.widgetsList
     },
+    // Get all data for vue-grid-layout
     getCurrentData(state) {
       return state.currentData
     },
-    getLayouts(state){
+    // Get all layouts
+    getLayouts(state) {
       return state.layouts
     }
-  },
-  actions: {
-
   }
 })
