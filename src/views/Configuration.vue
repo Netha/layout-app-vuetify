@@ -80,10 +80,6 @@
         },
         methods: {
             handleDragStart: function (e) {
-                 console.log('drag start');
-                 
-                 console.log(e);
-                 
                 // getting the widget name
                 this.currentlyDragging = e.target.dataset.wname;
                 // getting source id

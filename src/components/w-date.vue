@@ -32,7 +32,6 @@
     border-radius: 7px;
     color: #fff;
     font-size: 2em;
-        box-shadow: 0 0 40px hsla(0, 0%, 88.6%, .5);
-
+    box-shadow: 0 0 40px hsla(0, 0%, 88.6%, .5);
   }
 </style>
