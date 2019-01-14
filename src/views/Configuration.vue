@@ -88,7 +88,7 @@
                 console.log(`Selected componnet: ${this.currentlyDragging}`);
                 console.log(`Source placeholder: ${this.currentlySource}`);
             },
-            handleDrop: function (e) {
+            handleDrop: (e)=> {
                 this.currentlyDestination = e.target.dataset.placeholder ? e.target.dataset.placeholder : e.target
                     .parentElement.dataset.placeholder;
 
@@ -104,11 +104,11 @@
         computed: {
             layout: {
                 // get data
-                get: function () {
+                get: ()=> {
                     return this.$store.getters.getCurrentData
                 },
                 // set data
-                set: function (arry) {
+                set: (arry)=> {
                     this.$store.commit('setData', arry)
                 }
             },

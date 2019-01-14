@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 //  Dragging directive
 Vue.directive('draggable', {
-  bind: function (el, binding, vnode) {
+  bind: (el, binding, vnode) => {
     vnode.handleDragStart = function (e) {
       e.target.classList.add('dragging');
       e.dataTransfer.effectAllowed = 'move';
@@ -59,9 +59,9 @@ Vue.directive('draggable', {
     el.addEventListener('dragend', vnode.handleDragEnd, false);
     el.addEventListener('drop', vnode.handleDrop, false);
   },
-  unbind: function (el, binding, vnode) {
+  unbind: (el, binding, vnode) => {
     // end events
-    el.classList.remove('dragging', 'drag-over', 'drag-enter');
+    el.classList.remove('dragging', 'drag-enter');
     el.removeAttribute('draggable');
     el.removeEventListener('dragstart', vnode.handleDragStart);
     el.removeEventListener('dragenter', vnode.handleDragEnter);
