@@ -6,9 +6,11 @@
                 <h1>Components</h1>
                 <hr>
                 <ul>
-                    <li v-for="(item, index) in componnetsList" :key="index" draggable="true" v-bind:data-placeholder="null"
-                        @drop="drop" v-bind:data-wname="item" @dragstart="dragstart" @dragend="dragend" @dragover="dragover"
-                        @dragenter="dragenter">{{item}}</li>
+                    <li v-for="(item, index) in componnetsList" :key="index"
+                    v-bind:data-placeholder="null"
+                    v-bind:data-wname="item"
+                    v-draggable
+                    v-on:dragstart="handleDragStart">{{item}}</li>
                 </ul>
             </v-flex>
             <!-- layout placeholders -->
@@ -25,9 +27,12 @@
                                 <grid-item v-for="(item, index, key) in layout" :key="key" v-bind:class="{'grid-item': item.componnet == '' ? true : false}"
                                     :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i">
 
-                                    <div class="drag-area" v-bind:class="{cursor: item.componnet}" v-bind:draggable="item.componnet ? true : false"
-                                        v-bind:data-placeholder="index" @drop="drop" v-bind:data-wname="item.componnet"
-                                        @dragstart="dragstart" @dragend="dragend" @dragover="dragover" @dragenter="dragenter">
+                                    <div class="drag-area" v-bind:class="{cursor: item.componnet}" 
+                                    v-bind:data-placeholder="index"
+                                    v-bind:data-wname="item.componnet"
+                                    v-draggable
+                                                        v-on:dragstart="handleDragStart"
+                                    v-on:drop="handleDrop">
                                         <div class="tools" v-show="item.componnet" @click="item.componnet = ''">
                                             <v-icon>delete_outline</v-icon>
                                         </div>
@@ -74,43 +79,31 @@
             }
         },
         methods: {
-            drop: function (ev) {
-                this.currentlyDestination = ev.target.dataset.placeholder ? ev.target.dataset.placeholder : ev.target
+             handleDragStart: function (e) {
+                 console.log('drag start');
+                 
+                 console.log(e);
+                 
+                // getting the widget name
+                this.currentlyDragging = e.target.dataset.wname;
+                // getting source id
+                this.currentlySource = e.target.dataset.placeholder ? e.target.dataset.placeholder : null;
+
+                console.log(`Selected componnet: ${this.currentlyDragging}`);
+                console.log(`Source placeholder: ${this.currentlySource}`);
+            },
+            handleDrop: function (e) {
+                this.currentlyDestination = e.target.dataset.placeholder ? e.target.dataset.placeholder : e.target
                     .parentElement.dataset.placeholder;
 
                 console.log(`Destanation placeholder: ${this.currentlyDestination}`);
-
                 // Updating data
                 this.$store.commit('updateComponnets', {
                     'src': this.currentlySource,
                     'des': this.currentlyDestination,
                     'componnetName': this.currentlyDragging
                 })
-                this.dragend(ev);
-            },
-            dragover: function (ev) {
-                // console.log(ev)
-                ev.preventDefault();
-                return true;
-            },
-            dragstart: function (ev) {
-                // getting the widget name
-                this.currentlyDragging = ev.target.dataset.wname;
-                // getting source id
-                this.currentlySource = ev.target.dataset.placeholder ? ev.target.dataset.placeholder : null;
-
-                console.log(`Selected componnet: ${this.currentlyDragging}`);
-                console.log(`Source placeholder: ${this.currentlySource}`);
-            },
-            dragend: function (ev) {
-                console.log(ev);
-                ev.preventDefault();
-            },
-            dragenter: function (ev) {
-                ev.preventDefault();
-                return true;
-            },
-
+            }
         },
         computed: {
             layout: {
@@ -205,6 +198,8 @@
         position: relative;
         width: 100%;
         height: 100%;
+        transition: all .3s ease;
+
 
         &:hover .tools {
             opacity: 1;

@@ -68,13 +68,18 @@ export default new Vuex.Store({
     updateComponnets(state, obj) {
       // obj = src, des, componnetName
 
-      // Check if source is empty
+      // Check destantion exist 
       if (this.state.currentData[obj.des].componnet) {
           // replacing state
           let sourceW = state.currentData[obj.des].componnet;
           let currentW = obj.componnetName;
           state.currentData[obj.des].componnet = currentW
-          state.currentData[obj.src].componnet =  sourceW;
+
+          // in case is not replacing from commponnet list
+          if(obj.src){
+            state.currentData[obj.src].componnet =  sourceW;
+          }
+          
       } else {
         state.currentData[obj.des].componnet = obj.componnetName;
         // check if if from coponnent list
