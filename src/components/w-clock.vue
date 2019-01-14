@@ -19,7 +19,7 @@
         return h + ":" + m + ":" + s;
       }
     },
-    created: () => {
+    created: function tick() {
       setInterval(() => {
         this.time = this.getTime()
       }, 1000);
